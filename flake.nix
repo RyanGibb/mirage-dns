@@ -1,8 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
-    #hillingar.url = "github:RyanGibb/hillingar";
-    hillingar.url = "/home/ryan/projects/hillingar";
+    hillingar.url = "github:RyanGibb/hillingar";
 
     # use different repositories to those pinned in hillingar
     hillingar.inputs.opam-repository.follows = "opam-repository";
@@ -33,16 +32,7 @@
             mirage-nix = (hillingar.lib.${system});
             inherit (mirage-nix) mkUnikernelPackages;
           in
-            mkUnikernelPackages {
-              # insert unikernel name here
-              unikernelName = "ocaml-dns";
-              depexts = with pkgs; [ gmp ];
-              # uncomment if mirage files are in another directory
-              #mirageDir = "mirage"
-            } self;
-
+            mkUnikernelPackages { unikernelName = "ocaml-dns"; } self;
           defaultPackage = self.packages.${system}.unix;
-
-          devShell = import ./shell.nix { inherit pkgs; };
   });
 }
